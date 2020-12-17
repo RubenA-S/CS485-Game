@@ -21,6 +21,8 @@ public class Enemy : MonoBehaviour
     private float _attackTimer;
     private bool attacked;
 
+    public int aggroDistance;
+
     public float maxDamage;
     public float minDamage;
     public float damage;
@@ -34,6 +36,9 @@ public class Enemy : MonoBehaviour
         maxHealth = 100;
         movementSpeed = 0.025f;
         player = GameObject.FindWithTag("Player");
+
+        //distance between player and the enemy that will initiate combat
+        aggroDistance = 10;
 
         attackTimer = 2;
         minDamage = 5;
@@ -56,7 +61,13 @@ public class Enemy : MonoBehaviour
 		healthText.text = Mathf.RoundToInt(health).ToString();
         healthBar.fillAmount = Mathf.RoundToInt(health) / maxHealth;
 
-        if(aggro)
+        //enemy aggros if player is inside aggro distance
+        if (Vector3.Distance(player.transform.position, transform.position) <= aggroDistance)
+        {
+            aggro = true;
+        }
+            
+        if (aggro)
         {
             FollowPlayer();
         }

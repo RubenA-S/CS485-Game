@@ -39,8 +39,10 @@ public class Player : MonoBehaviour
     public bool triggeringEnemy;
     public GameObject attackingEnemy;
 
-    public Text healthText;
-    public Image healthBar;
+    //public Text healthText;
+    //public Image healthBar;
+
+    //public HealthBar healthBar;
 
     public AudioSource audio;
 
@@ -63,8 +65,10 @@ public class Player : MonoBehaviour
         pmr.GetComponent<BoxCollider>().enabled = false;
         anim = GetComponent<Animation>();
 
-        healthText = transform.Find("Canvas").Find("Text").GetComponent<Text>();
-        healthBar = transform.Find("Canvas").Find("Image2").GetComponent<Image>();
+        //healthText = transform.Find("Canvas").Find("Text").GetComponent<Text>();
+        //healthBar = transform.Find("Canvas").Find("Image2").GetComponent<Image>();
+
+        //healthBar.SetHealth(health, maxHealth);
 
         audio = GetComponent<AudioSource>();
     }
@@ -72,8 +76,10 @@ public class Player : MonoBehaviour
     //Functions
     void Update()
     {
-        healthText.text = Mathf.RoundToInt(health).ToString();
-        healthBar.fillAmount = Mathf.RoundToInt(health) / maxHealth;
+        //healthText.text = Mathf.RoundToInt(health).ToString();
+        //healthBar.fillAmount = Mathf.RoundToInt(health) / maxHealth;
+
+        //healthBar.SetHealth(health, maxHealth);
 
         //cameraFollow();
 
@@ -140,8 +146,16 @@ public class Player : MonoBehaviour
             attacked = false;
         }
 
+        if (health > maxHealth)
+        {
+            health = maxHealth;
+        }
+
         if (health <= 0)
         {
+            if (health < 0)
+                health = (float)0;
+
             Death();
         }
 
