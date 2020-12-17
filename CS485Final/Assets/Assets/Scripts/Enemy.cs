@@ -134,5 +134,9 @@ public class Enemy : MonoBehaviour
     {
 		Destroy(this);
         Destroy(gameObject);
+
+        player.GetComponent<Player>().triggeringEnemy = false;
+        player.GetComponent<Player>().attackingEnemy = null;
+        player.GetComponent<Player>().followingEnemy = false;
     }
 }

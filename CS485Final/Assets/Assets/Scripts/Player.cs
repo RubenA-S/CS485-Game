@@ -18,31 +18,34 @@ public class Player : MonoBehaviour
     Animation anim;
 
     public float attackTimer;
-    private float currentAttackTimer;
+    public float currentAttackTimer;
 
-    private bool moving;
-    private bool attacking;
-    private bool followingEnemy;
+    public bool moving;
+    public bool attacking;
+    public bool followingEnemy;
 
-    private float damage;
+    public float damage;
     public float minDamage;
     public float maxDamage;
 
-    private bool attacked;
+    public bool attacked;
 
     // pmr
     public GameObject playerMovePoint;
-    private Transform pmr;
-    private bool triggeringPMR;
+    public Transform pmr;
+    public bool triggeringPMR;
 
     // enemy
-    private bool triggeringEnemy;
-    private GameObject attackingEnemy;
+    public bool triggeringEnemy;
+    public GameObject attackingEnemy;
 
-    private Text healthText;
-    private Image healthBar;
+    public Text healthText;
+    public Image healthBar;
 
-    private AudioSource audio;
+    public AudioSource audio;
+
+    //new things
+    public GameObject target;
 
     void Start()
     {
@@ -96,11 +99,18 @@ public class Player : MonoBehaviour
                     {
                         attackingEnemy = hit.collider.gameObject;
                         followingEnemy = true;
+
+                        target = hit.collider.gameObject;
+                        triggeringEnemy = false;
                     }
                     else
                     {
                         attackingEnemy = null;
                         followingEnemy = false;
+
+
+                        target = null;
+                        triggeringEnemy = false;
                     }
                 }
             }
@@ -204,10 +214,12 @@ public class Player : MonoBehaviour
             triggeringPMR = true;
         }
 
-        if(other.tag == "Enemy")
+        if(other == target.GetComponent<Collider>())
+        //if (other.tag == "Enemy")
         {
             triggeringEnemy = true;
         }
+
     }
 
     void OnTriggerExit(Collider other)
