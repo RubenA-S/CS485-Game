@@ -516,7 +516,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 0
   health: 0
-  movementSpeed: 0
+  movementSpeed: 0.1
   attackTimer: 0
   currentAttackTimer: 0
   moving: 0
@@ -537,7 +537,7 @@ MonoBehaviour:
   inCombat: 0
   shouldMove: 0
   run: 0
-  runModifier: 0
+  runModifier: 2
 --- !u!1 &847447375708578578
 GameObject:
   m_ObjectHideFlags: 0
