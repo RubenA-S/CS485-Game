@@ -53,10 +53,14 @@ public class Player : MonoBehaviour
     public int inCombat;
 
     public bool shouldMove;
+    public bool run;
+
+    public int runModifier;
 
     void Start()
     {
-        movementSpeed = 0.5f;//0.05f;
+        runModifier = 2;
+        movementSpeed = 0.05f;
         attackTimer = 1.5f;
         minDamage = 50;// 10;
         maxDamage = 100;// 25;
@@ -81,6 +85,7 @@ public class Player : MonoBehaviour
         audio = GetComponent<AudioSource>();
 
         shouldMove = true;
+        run = false;
     }
 
     //Functions
@@ -192,6 +197,18 @@ public class Player : MonoBehaviour
             health += 5 * Time.deltaTime;
         }
 
+        //sets run to true when pushing left control
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            run = true;
+        }
+
+        //sets run to false when releasing left control
+        if (Input.GetKeyUp(KeyCode.LeftControl))
+        {
+            run = false;
+        }
+
     }
 
     public void Idle()
@@ -207,7 +224,15 @@ public class Player : MonoBehaviour
             {
                 if (!triggeringEnemy)
                 {
-                    transform.position = Vector3.MoveTowards(transform.position, attackingEnemy.transform.position, movementSpeed);
+                    if(run)
+                    {
+                        transform.position = Vector3.MoveTowards(transform.position, attackingEnemy.transform.position, movementSpeed * runModifier);
+                    }
+                    else
+                    {
+                        transform.position = Vector3.MoveTowards(transform.position, attackingEnemy.transform.position, movementSpeed);
+                    }
+                    
                     this.transform.LookAt(attackingEnemy.transform);
                 }
 
@@ -216,12 +241,29 @@ public class Player : MonoBehaviour
             {
                 if (!triggeringEnemy)
                 {
-                    transform.position = Vector3.MoveTowards(transform.position, pmr.transform.position, movementSpeed);
+                    if(run)
+                    {
+                        transform.position = Vector3.MoveTowards(transform.position, pmr.transform.position, movementSpeed * runModifier);
+                    }
+                    else
+                    {
+                        transform.position = Vector3.MoveTowards(transform.position, pmr.transform.position, movementSpeed);
+                    }
+                        
                     this.transform.LookAt(pmr.transform);
                 }
 
             }
-            anim.CrossFade("knight_walk");
+
+            if(run)
+            {
+                anim.CrossFade("BRB_infantry_03_run");
+            }
+            else
+            {
+                anim.CrossFade("knight_walk");
+            }
+            
         }
         
        
