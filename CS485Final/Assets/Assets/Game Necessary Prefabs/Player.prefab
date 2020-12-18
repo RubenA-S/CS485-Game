@@ -230,6 +230,7 @@ GameObject:
   - component: {fileID: 847447373973370866}
   - component: {fileID: 847447373973370878}
   - component: {fileID: 847447373973370872}
+  - component: {fileID: 5826841827469757549}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -405,7 +406,17 @@ Animation:
   - {fileID: 7400000, guid: a9e82453b26b1e346962cadcba80556a, type: 3}
   - {fileID: 7400000, guid: 0932505f83189174e9405ca64f635505, type: 3}
   - {fileID: 7400000, guid: 0cbd46aa8abdd9b409d3cfd4265bdd3f, type: 3}
-  - {fileID: 0}
+  - {fileID: 7400000, guid: 468220fdf687c594da5e9b866ddd14f4, type: 3}
+  - {fileID: 7400000, guid: 70a7215e248fef0419c811292dc56566, type: 3}
+  - {fileID: 7400000, guid: a047ee1170198e446936daf41639e0ca, type: 3}
+  - {fileID: 7400000, guid: fc24001ff1f79ff4eacf278bd9789f10, type: 3}
+  - {fileID: 7400000, guid: e0cf77922c442e440a273c1b6c0403a9, type: 3}
+  - {fileID: 7400000, guid: 2bab6676e898a7b48bd93b94875318cb, type: 3}
+  - {fileID: 7400000, guid: 34c5c344611774b4996f617d7df307ec, type: 3}
+  - {fileID: 7400000, guid: 19c9ff44c1b8eb04f915fe5f8469f0bb, type: 3}
+  - {fileID: 7400000, guid: c5b37c2f29827434eb0953e38723714f, type: 3}
+  - {fileID: 7400000, guid: 08511a1ef65639a4285514b1e6e43a2d, type: 3}
+  - {fileID: 7400000, guid: 9dd14c8f7027e054ea63e58cb01ce8ba, type: 3}
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
@@ -442,6 +453,29 @@ MonoBehaviour:
   attackingEnemy: {fileID: 0}
   audio: {fileID: 0}
   target: {fileID: 0}
+  inCombat: 0
+--- !u!195 &5826841827469757549
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847447375708578576}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &847447375708578578
 GameObject:
   m_ObjectHideFlags: 0

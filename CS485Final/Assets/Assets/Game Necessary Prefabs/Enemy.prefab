@@ -804,6 +804,7 @@ MonoBehaviour:
   minDamage: 0
   damage: 0
   isDead: 0
+  CanvasObject: {fileID: 1972825772655266798}
 --- !u!1 &7202208476870315529
 GameObject:
   m_ObjectHideFlags: 0

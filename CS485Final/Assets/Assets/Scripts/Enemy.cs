@@ -34,6 +34,9 @@ public class Enemy : MonoBehaviour
 
     private int deathAnimation;
 
+    //healthbar to be toggled on and off
+    public Canvas CanvasObject; // Assign in inspector
+
     //Functions
     void Start()
     {
@@ -53,6 +56,9 @@ public class Enemy : MonoBehaviour
 
         health = maxHealth;
         isDead = false;
+
+        //CanvasObject = GetComponent<Canvas>();
+        CanvasObject.GetComponent<Canvas>().enabled = false;
 
 
         _attackTimer = attackTimer;
@@ -83,7 +89,13 @@ public class Enemy : MonoBehaviour
             //enemy aggros if player is inside aggro distance
             if (Vector3.Distance(player.transform.position, transform.position) <= aggroDistance)
             {
+                if(aggro == false)
+                {
+                    player.GetComponent<Player>().inCombat += 1;
+                }
                 aggro = true;
+                
+                CanvasObject.GetComponent<Canvas>().enabled = true;
             }
 
             if (aggro)
@@ -250,6 +262,11 @@ public class Enemy : MonoBehaviour
                 break;
         }
 
+        //removes the healthbar after death
+        CanvasObject.GetComponent<Canvas>().enabled = false;
+        //CanvasObject.enabled = !CanvasObject.enabled;
+
+        player.GetComponent<Player>().inCombat -= 1;
 
         //Destroy(this);
         //Destroy(gameObject);

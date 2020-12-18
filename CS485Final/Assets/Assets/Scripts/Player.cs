@@ -49,6 +49,11 @@ public class Player : MonoBehaviour
     //new things
     public GameObject target;
 
+    //used to determine if in combat or not (number of attackers)
+    public int inCombat;
+
+    public bool shouldMove;
+
     void Start()
     {
         movementSpeed = 0.5f;//0.05f;
@@ -70,7 +75,12 @@ public class Player : MonoBehaviour
 
         //healthBar.SetHealth(health, maxHealth);
 
+        //initialize player out of combat
+        inCombat = 0;
+
         audio = GetComponent<AudioSource>();
+
+        shouldMove = true;
     }
 
     //Functions
@@ -94,6 +104,8 @@ public class Player : MonoBehaviour
             Vector3 mousePosition = ray.GetPoint(hitDistance);
             if(Input.GetMouseButtonDown(0))
             {
+                shouldMove = true;
+
                 moving = true;
                 triggeringPMR = false;
                 pmr.transform.position = mousePosition;
@@ -126,6 +138,9 @@ public class Player : MonoBehaviour
         //then deselect the target
         if (attackingEnemy && attackingEnemy.GetComponent<Enemy>().health <= 0)
         {
+            shouldMove = false;
+            anim.CrossFade("knight_idle");
+
             attackingEnemy = null;
             followingEnemy = false;
 
@@ -172,7 +187,7 @@ public class Player : MonoBehaviour
         }
 
         //out of combat health regeneration
-        if(!attackingEnemy && health < maxHealth)
+        if(inCombat == 0 && health < maxHealth)
         {
             health += 5 * Time.deltaTime;
         }
@@ -186,22 +201,31 @@ public class Player : MonoBehaviour
 
     public void Move()
     {
-        if(followingEnemy)
+        if(shouldMove)
         {
-            if(!triggeringEnemy)
+            if (followingEnemy)
             {
-                transform.position = Vector3.MoveTowards(transform.position, attackingEnemy.transform.position, movementSpeed);
-                this.transform.LookAt(attackingEnemy.transform);
+                if (!triggeringEnemy)
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, attackingEnemy.transform.position, movementSpeed);
+                    this.transform.LookAt(attackingEnemy.transform);
+                }
+
             }
-            
+            if (!followingEnemy)
+            {
+                if (!triggeringEnemy)
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, pmr.transform.position, movementSpeed);
+                    this.transform.LookAt(pmr.transform);
+                }
+
+            }
+            anim.CrossFade("knight_walk");
         }
-        else
-        {
-            transform.position = Vector3.MoveTowards(transform.position, pmr.transform.position, movementSpeed);
-            this.transform.LookAt(pmr.transform);
-        }
+        
        
-        anim.CrossFade("knight_walk");
+        
             
     }
 
@@ -240,14 +264,16 @@ public class Player : MonoBehaviour
         if(other.tag == "PMR")
         {
             triggeringPMR = true;
+            shouldMove = false;
         }
 
-        if(other == target.GetComponent<Collider>())
         //if (other.tag == "Enemy")
+        if (other == target.GetComponent<Collider>())
         {
             triggeringEnemy = true;
+            shouldMove = false;
         }
-
+            
     }
 
     void OnTriggerExit(Collider other)
