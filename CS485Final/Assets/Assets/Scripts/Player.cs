@@ -60,7 +60,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         runModifier = 2;
-        movementSpeed = 0.05f;
+        movementSpeed = 0.1f;
         attackTimer = 1.5f;
         minDamage = 50;// 10;
         maxDamage = 100;// 25;
