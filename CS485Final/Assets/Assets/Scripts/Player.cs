@@ -62,8 +62,8 @@ public class Player : MonoBehaviour
         runModifier = 2;
         movementSpeed = 0.1f;
         attackTimer = 1.5f;
-        minDamage = 50;// 10;
-        maxDamage = 100;// 25;
+        minDamage = 25;// 10;
+        maxDamage = 50;// 25;
         maxHealth = 100;
 
         health = maxHealth;

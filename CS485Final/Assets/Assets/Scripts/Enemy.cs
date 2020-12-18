@@ -78,6 +78,9 @@ public class Enemy : MonoBehaviour
         if (health < 0)
             health = 0;
 
+        if (health < 1 && health > 0)
+            health = 1;
+
         if (health <= 0 && !isDead)
         {
             Death();
@@ -224,6 +227,8 @@ public class Enemy : MonoBehaviour
         aggro = false;
         triggeringPlayer = false;
         attacked = false;
+
+        GetComponent<BoxCollider>().enabled = false;
 
         switch (deathAnimation)
         {
