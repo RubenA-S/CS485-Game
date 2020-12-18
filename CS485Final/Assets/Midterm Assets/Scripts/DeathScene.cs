@@ -1,8 +1,8 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Menu : MonoBehaviour
+public class DeathScene : MonoBehaviour
 {
 	private int origin_x;
 	private int origin_y;
@@ -22,9 +22,9 @@ public class Menu : MonoBehaviour
 
    void OnGUI(){
    	GUI.skin = mySkin;
-   	if(GUI.Button(new Rect(origin_x,origin_y,bWidth,bHeight),"Play"))
+   	if(GUI.Button(new Rect(origin_x,origin_y,bWidth,bHeight),"Menu"))
    	{
-   		Application.LoadLevel(1);
+   		Application.LoadLevel(0);
    	}
    	if(GUI.Button(new Rect(origin_x,origin_y + bHeight + 20,bWidth,bHeight),"Quit"))
    	{
