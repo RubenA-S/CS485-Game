@@ -308,13 +308,16 @@ public class Player : MonoBehaviour
             triggeringPMR = true;
             shouldMove = false;
         }
-
-        //if (other.tag == "Enemy")
-        if (other == target.GetComponent<Collider>())
+        if(target != null)
         {
-            triggeringEnemy = true;
-            shouldMove = false;
+            if (other == target.GetComponent<Collider>())
+            {
+                //if (other.tag == "Enemy")
+                triggeringEnemy = true;
+                shouldMove = false;
+            }
         }
+        
             
     }
 
