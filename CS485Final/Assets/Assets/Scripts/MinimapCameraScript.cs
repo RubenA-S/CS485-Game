@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class MinimapCameraScript : MonoBehaviour
 {
-
     public float cameraDistOffset = 15;
     private Camera mainCamera;
     private GameObject player;
 
-
-    // Start is called before the first frame update
+    // Use this for initialization
     void Start()
     {
         mainCamera = GetComponent<Camera>();
