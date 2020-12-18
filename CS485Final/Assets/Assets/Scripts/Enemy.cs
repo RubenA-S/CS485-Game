@@ -37,13 +37,9 @@ public class Enemy : MonoBehaviour
     //healthbar to be toggled on and off
     public Canvas CanvasObject; // Assign in inspector
 
-    public MeshRenderer meshRenderer;
-
     //Functions
     void Start()
     {
-        meshRenderer = GetComponent<MeshRenderer>();
-
         maxHealth = 100;
         movementSpeed = 0.025f;
         player = GameObject.FindWithTag("Player");
@@ -81,6 +77,9 @@ public class Enemy : MonoBehaviour
 
         if (health < 0)
             health = 0;
+
+        if (health < 1 && health > 0)
+            health = 1;
 
         if (health <= 0 && !isDead)
         {
@@ -273,6 +272,10 @@ public class Enemy : MonoBehaviour
         //CanvasObject.enabled = !CanvasObject.enabled;
 
         player.GetComponent<Player>().inCombat -= 1;
+
+        //player.GetComponent<Player>().maxHealth += 10;
+        //player.GetComponent<Player>().Level += 1;
+        player.GetComponent<Player>().Exp += 100;
 
         //Destroy(this);
         //Destroy(gameObject);

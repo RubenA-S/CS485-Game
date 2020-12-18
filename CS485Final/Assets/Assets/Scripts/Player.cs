@@ -57,14 +57,29 @@ public class Player : MonoBehaviour
 
     public int runModifier;
 
+    public float Level;
+    public float Exp;
+    public float maxExp;
+
+    public float levelUpModifier;
+
     void Start()
     {
+        Level = 1;
+        Exp = 0;
+        maxExp = 100;
+
+        levelUpModifier = 0.25f;
+
+        Level = PlayerPrefs.GetFloat("playerLevel");
+        Exp = PlayerPrefs.GetFloat("playerExperience");
+
         runModifier = 2;
-        movementSpeed = 0.1f;
+        movementSpeed = 0.05f;
         attackTimer = 1.5f;
-        minDamage = 50;// 10;
-        maxDamage = 100;// 25;
-        maxHealth = 100;
+        minDamage = 25 + ((Level - 1) * (25 * levelUpModifier));// 10;
+        maxDamage = 50 + ((Level - 1) * (50 * levelUpModifier));// 25;
+        maxHealth = 100 + ((Level - 1) * (100 * levelUpModifier));
 
         health = maxHealth;
 
@@ -91,12 +106,20 @@ public class Player : MonoBehaviour
     //Functions
     void Update()
     {
+        PlayerPrefs.SetFloat("playerLevel", Level);
+        PlayerPrefs.SetFloat("playerExperience", Exp);
+
         //healthText.text = Mathf.RoundToInt(health).ToString();
         //healthBar.fillAmount = Mathf.RoundToInt(health) / maxHealth;
 
         //healthBar.SetHealth(health, maxHealth);
 
         //cameraFollow();
+
+        if(Exp >= maxExp)
+        {
+            levelUp();
+        }
 
         //Player Movement
         Plane playerPlane = new Plane(Vector3.up, transform.position);
@@ -194,7 +217,7 @@ public class Player : MonoBehaviour
         //out of combat health regeneration
         if(inCombat == 0 && health < maxHealth)
         {
-            health += 5 * Time.deltaTime;
+            health += ((maxHealth * 0.01f) * Time.deltaTime);
         }
 
         //sets run to true when pushing left control
@@ -336,6 +359,22 @@ public class Player : MonoBehaviour
 
     void Death()
     {
-    	Application.LoadLevel(0);
+        //reset level and experience
+        PlayerPrefs.SetFloat("playerLevel", 1);
+        Level = 1;
+        PlayerPrefs.SetFloat("playerExperience", 0);
+        Exp = 0;
+
+        Application.LoadLevel(0);
+    }
+
+    void levelUp()
+    {
+        Exp = Exp - maxExp;
+        Level++;
+
+        minDamage = minDamage + (25 * levelUpModifier);
+        maxDamage = maxDamage + (50 * levelUpModifier);
+        maxHealth = maxHealth + (100 * levelUpModifier);
     }
 }
