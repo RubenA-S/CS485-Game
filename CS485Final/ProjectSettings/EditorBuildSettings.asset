@@ -11,4 +11,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Midterm Assets/Scenes/FirstLevel.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Midterm Assets/Scenes/SecondLevel.unity
+    guid: 8f9bbd02cd76d054aaaeb7615fcf0958
+  - enabled: 1
+    path: Assets/Midterm Assets/Scenes/ThirdLevel.unity
+    guid: d3d95bfcd0f98264b86bef6661546b9f
+  - enabled: 1
+    path: Assets/Midterm Assets/Scenes/DeathScene.unity
+    guid: a8e601b4a42ada348a432c979e039e83
   m_configObjects: {}
