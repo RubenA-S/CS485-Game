@@ -232,6 +232,12 @@ public class Player : MonoBehaviour
             run = false;
         }
 
+        //reset character when pushing escape
+        if (Input.GetKey("escape"))
+        {
+            resetCharacter();
+        }
+
     }
 
     public void Idle()
@@ -376,5 +382,20 @@ public class Player : MonoBehaviour
         minDamage = minDamage + (25 * levelUpModifier);
         maxDamage = maxDamage + (50 * levelUpModifier);
         maxHealth = maxHealth + (100 * levelUpModifier);
+    }
+
+    void resetCharacter()
+    {
+        //reset level and experience
+        PlayerPrefs.SetFloat("playerLevel", 1);
+        Level = 1;
+        PlayerPrefs.SetFloat("playerExperience", 0);
+        Exp = 0;
+
+        minDamage = 25 + ((Level - 1) * (25 * levelUpModifier));// 10;
+        maxDamage = 50 + ((Level - 1) * (50 * levelUpModifier));// 25;
+        maxHealth = 100 + ((Level - 1) * (100 * levelUpModifier));
+
+        health = maxHealth;
     }
 }
