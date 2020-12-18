@@ -30,6 +30,10 @@ public class Enemy : MonoBehaviour
     private Text healthText;
     private Image healthBar;
 
+    public bool isDead;
+
+    private int deathAnimation;
+
     //Functions
     void Start()
     {
@@ -40,11 +44,15 @@ public class Enemy : MonoBehaviour
         //distance between player and the enemy that will initiate combat
         aggroDistance = 10;
 
+        //random number used to determine what death animation will be used
+        deathAnimation = UnityEngine.Random.Range(1, 10);
+
         attackTimer = 2;
         minDamage = 5;
         maxDamage = 10;
 
         health = maxHealth;
+        isDead = false;
 
 
         _attackTimer = attackTimer;
@@ -61,24 +69,51 @@ public class Enemy : MonoBehaviour
 		healthText.text = Mathf.RoundToInt(health).ToString();
         healthBar.fillAmount = Mathf.RoundToInt(health) / maxHealth;
 
-        //enemy aggros if player is inside aggro distance
-        if (Vector3.Distance(player.transform.position, transform.position) <= aggroDistance)
-        {
-            aggro = true;
-        }
-            
-        if (aggro)
-        {
-            FollowPlayer();
-        }
+        if (health < 0)
+            health = 0;
 
-        if (triggeringPlayer)
-            Attack();
-
-        if(health <= 0)
+        if (health <= 0 && !isDead)
         {
             Death();
+            //anim.CrossFade("BRB_archer_10_death_A");
         }
+
+        if (!isDead)
+        {
+            //enemy aggros if player is inside aggro distance
+            if (Vector3.Distance(player.transform.position, transform.position) <= aggroDistance)
+            {
+                aggro = true;
+            }
+
+            if (aggro)
+            {
+                FollowPlayer();
+            }
+
+            if (triggeringPlayer)
+                Attack();
+
+            if (health > maxHealth)
+                health = maxHealth;
+
+            
+        }
+        
+        /*
+        else
+        {
+            if (health <= 0)
+            {
+                if (health < 0)
+                    health = 0;
+                Death();
+            }
+        }
+        */
+
+
+
     }
 
     public void Idle()
@@ -106,6 +141,14 @@ public class Enemy : MonoBehaviour
             _attackTimer -= 1 * Time.deltaTime;
 
         //Attack();
+    }
+
+    public void stopFollowingPlayer()
+    {
+        this.transform.position = Vector3.MoveTowards(transform.position, transform.position, movementSpeed);
+        //this.transform.LookAt(player.transform);
+
+        anim.CrossFade("undead_idle");
     }
 
 
@@ -143,11 +186,78 @@ public class Enemy : MonoBehaviour
 
     void Death()
     {
-		Destroy(this);
+        /*
+        Destroy(this);
         Destroy(gameObject);
 
+        
         player.GetComponent<Player>().triggeringEnemy = false;
         player.GetComponent<Player>().attackingEnemy = null;
         player.GetComponent<Player>().followingEnemy = false;
+        */
+
+
+
+
+
+
+
+
+        
+        //anim.CrossFade("undead_idle");
+        
+        stopFollowingPlayer();
+
+        isDead = true;
+        aggro = false;
+        triggeringPlayer = false;
+        attacked = false;
+
+        switch (deathAnimation)
+        {
+            case 10:
+                anim.CrossFade("BRB_worker_10_death_B");
+                break;
+            case 9:
+                anim.CrossFade("BRB_worker_10_death_A");
+                break;
+            case 8:
+                anim.CrossFade("BRB_spearman_10_death_B");
+                break;
+            case 7:
+                anim.CrossFade("BRB_spearman_10_death_A");
+                break;
+            case 6:
+                anim.CrossFade("BRB_mage_10_death_B");
+                break;
+            case 5:
+                anim.CrossFade("BRB_mage_10_death_A");
+                break;
+            case 4:
+                anim.CrossFade("BRB_infantry_10_death_B");
+                break;
+            case 3:
+                anim.CrossFade("BRB_infantry_10_death_A");
+                break;
+            case 2:
+                anim.CrossFade("BRB_archer_10_death_B");
+                break;
+            case 1:
+                anim.CrossFade("BRB_archer_10_death_A");
+                break;
+            default:
+                anim.CrossFade("BRB_archer_10_death_A");
+                break;
+        }
+
+
+        //Destroy(this);
+        //Destroy(gameObject);
+
+        /*
+        player.GetComponent<Player>().triggeringEnemy = false;
+        player.GetComponent<Player>().attackingEnemy = null;
+        player.GetComponent<Player>().followingEnemy = false;
+        */
     }
 }

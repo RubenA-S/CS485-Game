@@ -51,10 +51,10 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        movementSpeed = 0.05f;
+        movementSpeed = 0.5f;//0.05f;
         attackTimer = 1.5f;
-        minDamage = 10;
-        maxDamage = 25;
+        minDamage = 50;// 10;
+        maxDamage = 100;// 25;
         maxHealth = 100;
 
         health = maxHealth;
@@ -120,6 +120,18 @@ public class Player : MonoBehaviour
                     }
                 }
             }
+        }
+
+        //if you kill what you are targeting
+        //then deselect the target
+        if (attackingEnemy && attackingEnemy.GetComponent<Enemy>().health <= 0)
+        {
+            attackingEnemy = null;
+            followingEnemy = false;
+
+
+            target = null;
+            triggeringEnemy = false;
         }
 
         if (moving)
@@ -213,6 +225,8 @@ public class Player : MonoBehaviour
             transform.LookAt(attackingEnemy.transform);
 
             attackingEnemy.GetComponent<Enemy>().aggro = true;
+
+            followingEnemy = false;
 
             anim.CrossFade("knight_attack");
         }
