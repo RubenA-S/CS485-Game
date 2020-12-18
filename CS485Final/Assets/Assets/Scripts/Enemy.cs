@@ -37,13 +37,9 @@ public class Enemy : MonoBehaviour
     //healthbar to be toggled on and off
     public Canvas CanvasObject; // Assign in inspector
 
-    public MeshRenderer meshRenderer;
-
     //Functions
     void Start()
     {
-        meshRenderer = GetComponent<MeshRenderer>();
-
         maxHealth = 100;
         movementSpeed = 0.025f;
         player = GameObject.FindWithTag("Player");
@@ -228,8 +224,6 @@ public class Enemy : MonoBehaviour
         aggro = false;
         triggeringPlayer = false;
         attacked = false;
-
-        GetComponent<BoxCollider>().enabled = false;
 
         switch (deathAnimation)
         {
