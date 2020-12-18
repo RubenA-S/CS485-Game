@@ -275,7 +275,7 @@ public class Enemy : MonoBehaviour
 
         //player.GetComponent<Player>().maxHealth += 10;
         //player.GetComponent<Player>().Level += 1;
-        player.GetComponent<Player>().Exp += 100;
+        player.GetComponent<Player>().Exp += 30;
 
         //Destroy(this);
         //Destroy(gameObject);
